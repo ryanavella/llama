@@ -1,6 +1,6 @@
 # Llama 2
 
-We are unlocking the power of large language models. Our latest version of Llama is now accessible to individuals, creators, researchers and businesses of all sizes so that they can experiment, innovate and scale their ideas responsibly. 
+We are unlocking the power of large language models. Our latest version of Llama is now accessible to individuals, creators, researchers and businesses of all sizes so that they can experiment, innovate and scale their ideas responsibly.
 
 This release includes model weights and starting code for pretrained and fine-tuned Llama language models — ranging from 7B to 70B parameters.
 
@@ -58,6 +58,8 @@ torchrun --nproc_per_node 1 example_chat_completion.py \
 - Adjust the `max_seq_len` and `max_batch_size` parameters as needed.
 - This example runs the [example_chat_completion.py](example_chat_completion.py) found in this repository but you can change that to a different .py file.
 
+It is also possible to test models without CUDA. For example, to run models on CPU, add an extra command line option `--backend cpu` to following examples. Number of threads can be set using the environment variable `NUM_THREADS`.
+
 ## Inference
 
 Different models require different model-parallel (MP) values:
@@ -114,7 +116,7 @@ See [MODEL_CARD.md](MODEL_CARD.md).
 
 ## License
 
-Our model and weights are licensed for both researchers and commercial entities, upholding the principles of openness. Our mission is to empower individuals, and industry through this opportunity, while fostering an environment of discovery and ethical AI advancements. 
+Our model and weights are licensed for both researchers and commercial entities, upholding the principles of openness. Our mission is to empower individuals, and industry through this opportunity, while fostering an environment of discovery and ethical AI advancements.
 
 See the [LICENSE](LICENSE) file, as well as our accompanying [Acceptable Use Policy](USE_POLICY.md)
 

@@ -18,6 +18,7 @@ from torch import nn
 
 @dataclass
 class ModelArgs:
+    device: object
     dim: int = 4096
     n_layers: int = 32
     n_heads: int = 32
@@ -203,6 +204,7 @@ class Attention(nn.Module):
         self.n_local_kv_heads = self.n_kv_heads // model_parallel_size
         self.n_rep = self.n_local_heads // self.n_local_kv_heads
         self.head_dim = args.dim // args.n_heads
+        self.device = args.device
 
         self.wq = ColumnParallelLinear(
             args.dim,
@@ -240,7 +242,7 @@ class Attention(nn.Module):
                 self.n_local_kv_heads,
                 self.head_dim,
             )
-        ).cuda()
+        ).to(self.device)
         self.cache_v = torch.zeros(
             (
                 args.max_batch_size,
@@ -248,7 +250,7 @@ class Attention(nn.Module):
                 self.n_local_kv_heads,
                 self.head_dim,
             )
-        ).cuda()
+        ).to(self.device)
 
     def forward(
         self,
@@ -433,6 +435,7 @@ class Transformer(nn.Module):
         self.params = params
         self.vocab_size = params.vocab_size
         self.n_layers = params.n_layers
+        self.device = params.device
 
         self.tok_embeddings = ParallelEmbedding(
             params.vocab_size, params.dim, init_method=lambda x: x
